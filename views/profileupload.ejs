@@ -2,20 +2,33 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Upload Profile Picture</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
-    <div class="w-full min-h-screen bg-zinc-900 text-white p-10">
-        <h3 class="text-3xl mb-5">Upload Profile Picture</h3>
-        <form autocomplete="off" action="/upload" method="post" enctype="multipart/form-data">
-        <input type="file" name="image">
-            <input class="px-5 py-2 bg-blue-500 rounded-md" type="submit" value="Upload File">
-        </form>
-    </div>
+<body class="bg-zinc-900 text-white min-h-screen flex items-center justify-center p-6">
+  <div class="w-full max-w-lg bg-zinc-800 p-8 rounded-xl shadow-lg">
+
+    <h3 class="text-2xl font-semibold mb-6">Upload Profile Picture</h3>
+
+    <form autocomplete="off" action="/upload" method="post" enctype="multipart/form-data" class="flex flex-col gap-5">
+      <input
+        type="file"
+        name="image"
+        accept="image/*"
+        class="file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 transition bg-transparent text-zinc-300"
+        required
+      />
+
+      <input
+        class="px-5 py-2 bg-blue-500 hover:bg-blue-600 transition rounded-md font-medium text-white cursor-pointer"
+        type="submit"
+        value="Upload File"
+      />
+    </form>
+  </div>
 </body>
 
 </html>

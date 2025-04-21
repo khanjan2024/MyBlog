@@ -54,6 +54,12 @@ app.get("/edit/:id", isLoggedIn, async (req, res) => {
     let post = await postModel.findOne({ _id: req.params.id }).populate("user")
     res.render("edit", { post })
 })
+app.get("/delete/:id", isLoggedIn, async (req, res) => {
+    let post = await postModel.findOneAndDelete({ _id: req.params.id })
+   res.redirect("/profile")
+})
+
+
 app.post("/update/:id", isLoggedIn, async (req, res) => {
     let post = await postModel.findOneAndUpdate({ _id: req.params.id }, { content: req.body.content })
     res.redirect("/profile")
@@ -73,7 +79,7 @@ app.post("/register", async (req, res) => {
     let { email, password, username, name, age } = req.body;
 
     let user = await userModel.findOne({ email });
-    if (user) return res.status(500).send("User already registered")
+    if (user) return res.status(500).render("alreadyReg")
 
     bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(password, salt, async (err, hash) => {
@@ -86,7 +92,7 @@ app.post("/register", async (req, res) => {
             });
             let token = jwt.sign({ email: email, userid: user._id }, "shhh");
             res.cookie("token", token)
-            res.response("registered")
+            res.redirect("/profile")
         })
     })
 })
@@ -94,7 +100,7 @@ app.post("/login", async (req, res) => {
     let { email, password } = req.body;
 
     let user = await userModel.findOne({ email });
-    if (!user) return res.status(500).send("Something went wrong");
+    if (!user) return res.status(500).render("wrong")
     bcrypt.compare(password, user.password, function (err, result) {
         if (result) {
             let token = jwt.sign({ email: email, userid: user._id }, "shhh");
