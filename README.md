@@ -1,11 +1,11 @@
 # MyBlog 📝
 
-A blog platform where users can register, login, post blogs, edit them, like/unlike posts, and update their profile picture.
+A blog platform where users can register, login, post blogs, edit them, delete them, like/unlike posts, and update their profile picture.
 
 ## Features
 - User Registration/Login
 - JWT Authentication
-- Create/Edit Blog Posts
+- Create/Edit/Delete Blog Posts
 - Like & Unlike System
 - Upload Profile Picture
 - Personalized Greeting on Login
