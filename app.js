@@ -7,6 +7,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const crypto=require('crypto')
 const path=require('path')
+require('dotenv').config();
 
 const upload = require('./utils/multerconfig');
 
@@ -90,7 +91,7 @@ app.post("/register", async (req, res) => {
                 name,
                 password: hash
             });
-            let token = jwt.sign({ email: email, userid: user._id }, "shhh");
+            let token = jwt.sign({ email: email, userid: user._id }, process.env.JWT_SECRET);
             res.cookie("token", token)
             res.redirect("/profile")
         })
@@ -103,7 +104,7 @@ app.post("/login", async (req, res) => {
     if (!user) return res.status(500).render("wrong")
     bcrypt.compare(password, user.password, function (err, result) {
         if (result) {
-            let token = jwt.sign({ email: email, userid: user._id }, "shhh");
+            let token = jwt.sign({ email: email, userid: user._id }, process.env.JWT_SECRET);
             res.cookie("token", token)
             res.status(200).redirect("/profile")
         }
@@ -120,7 +121,7 @@ app.get("/logout", async (req, res) => {
 function isLoggedIn(req, res, next) {
     if (req.cookies.token === "") res.redirect("/login");
     else {
-        let data = jwt.verify(req.cookies.token, "shhh");
+        let data = jwt.verify(req.cookies.token, process.env.JWT_SECRET);
         req.user = data;
         next();
     }
